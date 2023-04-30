@@ -23,7 +23,7 @@ main {
 
     .top-row ::deep a, .top-row ::deep .btn-link {
         white-space: nowrap;
-        margin-left: 1.5rem;
+        margin-left: .5rem;
         text-decoration: none;
     }
 
@@ -37,9 +37,7 @@ main {
     }
 
 @media (max-width: 640.98px) {
-    .top-row:not(.auth) {
-        display: none;
-    }
+    
 
     .top-row.auth {
         justify-content: space-between;
@@ -55,12 +53,6 @@ main {
         flex-direction: row;
     }
 
-    .sidebar {
-        width: 250px;
-        height: 100vh;
-        position: sticky;
-        top: 0;
-    }
 
     .top-row {
         position: sticky;
