@@ -4,11 +4,11 @@
 <PageTitle>Register</PageTitle>
 
 <EditForm Model="user" OnValidSubmit="HandleRegistration">
-    <DataAnnotationsValidator/>
+    <DataAnnotationsValidator />
     <div class="mb-3">
         <label for="email">Email</label>
         <InputText id="email" @bind-Value="user.Email" class="form-control"></InputText>
-        <ValidationMessage For="@(()=> user.Email)"/>
+        <ValidationMessage For="@(()=> user.Email)" />
     </div>
     <div class="mb-3">
         <label for="password">Password</label>
@@ -21,27 +21,29 @@
         <ValidationMessage For="@(()=> user.ConfirmPassword)" />
     </div>
     <button type="submit" class="btn btn-primary">Register</button>
-    <div class="text-danger">
-        <span>@errorMessage</span>
+    <div class="@messageCssClass">
+        <span>@message</span>
     </div>
 </EditForm>
 
 
 @code {
-        UserRegister user = new UserRegister();
+    UserRegister user = new UserRegister();
 
-        string errorMessage = string.Empty;
+    string message = string.Empty;
+    string messageCssClass = string.Empty;
 
-        async Task HandleRegistration()
+    async Task HandleRegistration()
+    {
+        var result = await AuthService.Register(user);
+        message = result.Message;
+        if (result.Success)
         {
-            var result = await AuthService.Register(user);
-            if (!result.Success)
-            {
-                errorMessage = result.Message;
-            }
-            else
-            {
-                errorMessage = string.Empty;
-            }
+            messageCssClass = "text-success";
         }
+        else
+        {
+            messageCssClass = "text-danger";
+        }
+    }
 }
