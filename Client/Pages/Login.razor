@@ -4,6 +4,7 @@
 @inject ILocalStorageService localStroage
 @inject NavigationManager navigationManager
 @inject AuthenticationStateProvider authenticationStateProvider
+@inject ICartService cartService
 
 <PageTitle>Login</PageTitle>
 
@@ -50,6 +51,7 @@
             errorMessage = string.Empty;
             await localStroage.SetItemAsync("authToken", result.Data);
             await authenticationStateProvider.GetAuthenticationStateAsync();
+            await cartService.StoreCartItems(true);
             navigationManager.NavigateTo(returnUrl);
         }
         else
