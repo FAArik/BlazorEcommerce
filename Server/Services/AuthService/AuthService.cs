@@ -9,11 +9,13 @@ namespace BlazorEcommerce.Server.Services.AuthService
     public class AuthService : IAuthService
     {
         private readonly DataContext _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IConfiguration _configuration;
 
-        public AuthService(DataContext context,IConfiguration configuration)
+        public AuthService(DataContext context,IHttpContextAccessor httpContextAccessor,IConfiguration configuration)
         {
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
             _configuration = configuration;
         }
 
@@ -114,5 +116,6 @@ namespace BlazorEcommerce.Server.Services.AuthService
             return new ServiceResponse<bool> { Data = true ,Message="Password has been changed", Success=true};
         }
 
+        public int GetUserId() => int.Parse(_httpContextAccessor.HttpContext.User.FindFirstValue(ClaimTypes.NameIdentifier));
     }
 }
