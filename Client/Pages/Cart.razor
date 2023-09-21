@@ -1,15 +1,13 @@
 ﻿@page "/cart"
 @inject ICartService CartService
 @inject IOrderService OrderService
+@inject NavigationManager navigationManager
 
 <PageTitle>Shopping Cart</PageTitle>
 
 @if (CartProducts == null || CartProducts.Count == 0)
 {
     <span>@message</span>
-}
-else if(orderPlaced){
-    <span>Thank you for your order! You can check your orders <a href="orders">here!</a></span>
 }
 else
 {
@@ -34,7 +32,7 @@ else
             Total (@CartProducts.Count): $@CartProducts.Sum(product=>@product.Price * product.Quantity)
         </div>
     </div>
-    <button @onclick="PlaceOrder" class="btn alert-success float-end mt-1">Place Order</button>
+    <button @onclick="PlaceOrder" class="btn alert-success float-end mt-1">Checkout</button>
 }
 
 @code {
@@ -71,8 +69,8 @@ else
     }
     private async Task PlaceOrder()
     {
-        await OrderService.PlaceOrder();
-        await CartService.GetCartItemsCount();
-        orderPlaced = true;
+        string url =await OrderService.PlaceOrder();
+        navigationManager.NavigateTo(url);
+
     }
 }

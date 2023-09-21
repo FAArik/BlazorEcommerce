@@ -7,5 +7,6 @@
         Task<ServiceResponse<string>> Login(string email,string password);
         Task<ServiceResponse<bool>> ChangePassword(int userid, string newPassword);
         int GetUserId();
+        string GetUserEmail();
     }
 }
